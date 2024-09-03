@@ -21,6 +21,7 @@ class Auth:
             return True
         if excluded_paths is None:
             return True
+        return False
 
     def authorization_header(self, request=None) -> str:
         """returns the flask object
