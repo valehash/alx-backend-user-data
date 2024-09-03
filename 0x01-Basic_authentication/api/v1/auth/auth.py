@@ -2,7 +2,7 @@
 """
 Auth model for the api
 """
-from typing import *
+from typing import List, TypeVar
 from flask import request
 
 
