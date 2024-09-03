@@ -11,6 +11,7 @@ class Auth:
     it handles which paths need authtication
     and which ones do not
     """
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """returns path that requre auth
         input: path:str excluded_paths:List[str]
@@ -35,7 +36,6 @@ class Auth:
         if "Authorization" in request.headers:
             return request.headers.get("Authorization")
         return None
-
 
     def current_user(self, request=None) -> TypeVar('User'):
         """Returns the current user
