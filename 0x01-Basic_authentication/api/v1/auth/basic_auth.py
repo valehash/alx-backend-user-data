@@ -11,8 +11,8 @@ class BasicAuth(Auth):
     """ The authentication class for all paths,
     Inherits from auth.py
     """
-    def extract_base64_authorization_header
-    (self, authorization_header: str) -> str:
+    def extract_base64_authorization_header(
+            self, authorization_header: str) -> str:
         """Function that encodes the autohrization header
         params:(self, auth_header: str)
         returns: str
