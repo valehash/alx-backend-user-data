@@ -20,7 +20,10 @@ class Auth:
             return True
         if excluded_paths is None:
             return True
-        return False
+        normalized_path = path if path.endswith('/') else path+'/'
+        if normalized_path in excluded_path:
+            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """returns the flask object
