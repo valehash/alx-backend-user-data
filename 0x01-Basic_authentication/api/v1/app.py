@@ -16,7 +16,7 @@ auth = None
 auth_type = os.getenv("AUTH_TYPE")
 
 
-#adding auth or basic_auth functionality
+# adding auth or basic_auth functionality
 if auth_type == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
