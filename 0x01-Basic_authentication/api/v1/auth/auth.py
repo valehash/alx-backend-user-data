@@ -7,8 +7,7 @@ from flask import request
 
 
 class Auth:
-    """
-    The authentication class for all paths,
+    """ The authentication class for all paths,
     it handles which paths need authtication
     and which ones do not
     """
