@@ -5,6 +5,7 @@ from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
 
+
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
 def view_all_users() -> str:
     """ GET /api/v1/users
@@ -19,20 +20,17 @@ def view_all_users() -> str:
 def view_one_user(user_id: str = None) -> str:
     """ GET /api/v1/users/:id
     Path parameter:
-        - User ID
+      - User ID
     Return:
-        - User object JSON represented
-        - 404 if the User ID doesn't exist
+      - User object JSON represented
+      - 404 if the User ID doesn't exist
     """
     if user_id is None:
-        return jsonify(["user_id is None"])
+        abort(404)
     user = User.get(user_id)
     if user is None:
-        if user_id == "me":
-            if request.current_user is None:
-                return jsonify(["no shit"])
-            user = request.current_user
-        return jsonify(user.to_json()) 
+        abort(404)
+    return jsonify(user.to_json())
 
 
 @app_views.route('/users/<user_id>', methods=['DELETE'], strict_slashes=False)
@@ -122,15 +120,3 @@ def update_user(user_id: str = None) -> str:
         user.last_name = rj.get('last_name')
     user.save()
     return jsonify(user.to_json()), 200
-"""
-@app_views.route('/users/me', methods=['GET'], strict_slashes=False)
-def view_me() -> str:
-  #GET /api/v1/users/me
-   # Path parameter:
-    #Return:
-     # - User object JSON represented
-     # - 404 if the User ID doesn't exist
-    if request.current_user is None:
-        abort(404)
-    return jsonify(request.current_user.to_json())
-    """

@@ -74,13 +74,17 @@ class BasicAuth(Auth):
                     return u
             return None
         except Exception:
-            return None    
-        
+            return None
+
     def current_user(self, request=None) -> TypeVar('User'):
-        """Returns a user after validation"""
-        authority64 = self.authorization_header(request)
-        user64 = self.extract_base64_authorization_header(authority64)
-        user = self.decode_base64_authorization_header(user64)
-        user = self.extract_user_credentials(user)
-        user = self.user_object_from_credentials(user[0], user[1])
+        """Returns user Instances based on the requests"""
+        _auth_header = self.authorization_header(request)
+        extracted_auth = self.extract_base64_authorization_header(
+                    _auth_header)
+        decoded_b64 = self.decode_base64_authorization_header(
+                        extracted_auth)
+        email, pword = self.extract_user_credentials(
+                            decoded_b64)
+        user = self.user_object_from_credentials(
+                                email, pword)
         return user
