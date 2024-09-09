@@ -29,15 +29,19 @@ elif auth_type == "basic_auth":
 def before_request() -> str:
     """ Filters the request that are made
     """
-    if auth:
-        included_paths = ['/api/v1/status/',
+    if auth is None:
+        pass
+    setattr(request, "current_user", auth.current_user(request))
+    included_paths = ['/api/v1/status/',
                           '/api/v1/unauthorized/', '/api/v1/forbidden/']
-        if auth.require_auth(request.path, included_paths):
-            if auth.authorization_header(request) is None:
-                abort(401)
-            if auth.current_user(request) is None:
-                abort(403)
-
+     
+    if auth.require_auth(request.path, included_paths) is False:
+        return
+    if auth.authorization_header(request) is None:
+        abort(401)
+    if auth.current_user(request) is None:
+        abort(403)
+    return None
 
 @app.errorhandler(404)
 def not_found(error) -> str:
