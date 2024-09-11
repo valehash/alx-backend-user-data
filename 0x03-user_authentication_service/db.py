@@ -37,4 +37,5 @@ class DB:
         )
         self._session.add(new_user)
         self._session.commit()
+        self._session.close()
         return new_user
