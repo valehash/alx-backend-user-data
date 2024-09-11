@@ -8,10 +8,11 @@ from sqlalchemy.ext.declarative import declarative_base
 # Base class for declarative class definitions
 Base = declarative_base()
 
+
 class User(Base):
     """A user class with the properties created in sqlachemy"""
     __tablename__ = 'users'
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True)
     email = Column(String(250), nullable=False, unique=True)
     hashed_password = Column(String(250), nullable=False)
