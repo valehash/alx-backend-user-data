@@ -6,7 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from user import Base, User
-
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
 
 class DB:
     """DB class
@@ -37,5 +38,16 @@ class DB:
         )
         self._session.add(new_user)
         self._session.commit()
-        self._session.close()
         return new_user
+    
+    def find_user_by(self, **kwargs) -> User:
+        for k ,v in kwargs.items():
+            key_word = k
+            value = v
+        if hasattr(User, key_word):
+            users = self._session.query(User)
+            for user in users:
+                if getattr(user,key_word) == value:
+                    return user
+                raise NoResultFound
+        raise InvalidRequestError
