@@ -46,19 +46,22 @@ class DB:
         for k, v in kwargs.items():
             key_word = k
             value = v
+            if k not in User.__dict__:
+                raise InvalidRequestError
         if hasattr(User, key_word):
             users = self._session.query(User)
             for user in users:
                 if getattr(user, key_word) == value:
                     return user
                 raise NoResultFound
-        raise InvalidRequestError
+
+
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Function to update a parameter in the user"""
         try:
             user = self.find_user_by(id=user_id)
-        except NoResultFound:
+        except Exception:
             raise ValueError
         for key, value in kwargs.items():
             if not hasattr(user, key):
