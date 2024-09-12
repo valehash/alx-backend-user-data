@@ -42,20 +42,14 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
-        """Function to find a user in the db """
+        all_users = self._session.query(User)
         for k, v in kwargs.items():
-            key_word = k
-            value = v
             if k not in User.__dict__:
                 raise InvalidRequestError
-        if hasattr(User, key_word):
-            users = self._session.query(User)
-            for user in users:
-                if getattr(user, key_word) == value:
-                    return user
-                raise NoResultFound
-
-
+            for usr in all_users:
+                if getattr(usr, k) == v:
+                    return usr
+        raise NoResultFound
 
     def update_user(self, user_id: int, **kwargs) -> None:
         """Function to update a parameter in the user"""
