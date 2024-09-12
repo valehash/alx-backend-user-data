@@ -42,6 +42,7 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs) -> User:
+        """Function to find a user in the db """
         for k, v in kwargs.items():
             key_word = k
             value = v
@@ -53,15 +54,14 @@ class DB:
                 raise NoResultFound
         raise InvalidRequestError
 
-    
     def update_user(self, user_id: int, **kwargs) -> None:
+        """Function to update a parameter in the user"""
         try:
-            user = self.find_user_by(id = user_id)
+            user = self.find_user_by(id=user_id)
         except NoResultFound:
             raise ValueError
         for key, value in kwargs.items():
             if not hasattr(user, key):
                 raise ValueError
             setattr(user, key, value)
-            self._session.commit()
-
+        self._session.commit()
