@@ -7,7 +7,7 @@ from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-
+from uuid import uuid4
 
 def _hash_password(pwd: str) -> bytes:
     """Function to create a hashed password from a string"""
@@ -16,6 +16,9 @@ def _hash_password(pwd: str) -> bytes:
     hash_password = bcrypt.hashpw(pwd, salt)
     return hash_password
 
+def _generate_uuid() -> str:
+    """Function to generate an id"""
+    return str(uuid4())
 
 class Auth:
     """Auth class to interact with the authentication database.
@@ -45,10 +48,8 @@ class Auth:
     def valid_login(self, email: str, passw: str) -> bool:
         """Valid_login returns true if the the login exist"""
         try:
-            # finding out if user exist and assigning if it does
             user = self._db.find_user_by(email=email)
         except NoResultFound:
             return False
 
-        # using bycrypt to check if the password matcheds the user in the db
         return bcrypt.checkpw(passw.encode("utf-8"), user.hashed_password)
