@@ -7,7 +7,7 @@ from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
-
+from typing import Bool
 
 def _hash_password(pwd: str) -> bytes:
     """Function to create a hashed password from a string"""
@@ -42,7 +42,7 @@ class Auth:
             return user
         raise ValueError(f"user {email} already exists")
 
-    def valid_login(self, email: str, passw: str) -> bool:
+    def valid_login(self, email: str, passw: str) -> Bool:
         """Valid_login returns true if the the login exist"""
         try:
             # finding out if user exist and assigning if it does
