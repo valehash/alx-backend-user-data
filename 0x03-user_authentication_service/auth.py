@@ -42,7 +42,7 @@ class Auth:
             return user
         raise ValueError(f"user {email} already exists")
 
-    def valid_login(self, email: str, passw: str) -> Bool:
+    def valid_login(self, email: str, passw: str) -> bool:
         """Valid_login returns true if the the login exist"""
         try:
             # finding out if user exist and assigning if it does
