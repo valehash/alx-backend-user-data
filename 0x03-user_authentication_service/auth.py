@@ -9,6 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from uuid import uuid4
 
+
 def _hash_password(pwd: str) -> bytes:
     """Function to create a hashed password from a string"""
     pwd = pwd.encode('utf-8')
@@ -16,9 +17,11 @@ def _hash_password(pwd: str) -> bytes:
     hash_password = bcrypt.hashpw(pwd, salt)
     return hash_password
 
+
 def _generate_uuid() -> str:
     """Function to generate an id"""
     return str(uuid4())
+
 
 class Auth:
     """Auth class to interact with the authentication database.
